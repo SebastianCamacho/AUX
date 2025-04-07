@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using BLL.DTOs;
+using BLL.Exceptions;
 using BLL.Interfaces;
 using DAL.Interfaces;
+using DAL.Repositories;
 using ENTITY.Models;
 using System;
 using System.Collections.Generic;
@@ -48,16 +50,32 @@ namespace BLL.Services
 
         public async Task UpdateAsync(string id, OwnerDTO dto)
         {
-            var entity = _mapper.Map<Owner>(dto);
-            entity.Third_Party.thirdParty_Id = id;
-            await _repo.UpdateAsync(entity);
+            var existingOwner = await _repo.GetByIdAsync(id);
+
+            if (existingOwner == null)
+                throw new BusinessException($"El Owner (id:{id}) que intenta actualizar no existe en la base de datos ");
+
+            // Mapear los datos del DTO al Owner existente
+            _mapper.Map(dto, existingOwner);
+
+            try
+            {
+                await _repo.UpdateAsync(existingOwner);
+            }
+            catch (Exception ex)
+            {
+                throw new BusinessException($"Error al actualizar el Owner con ID {id}: {ex.Message}");
+            }
         }
         
         public async Task DeleteAsync(string id)
         {
-            //agregar funcionalidad con el id del third party
+            //agregar funcionalidad con el id del third 
+                var owner = await _repo.GetByIdAsync(id);
+                if (owner == null)
+                    throw new BusinessException($"No se encontró ningún Owner con el ID '{id}'.");
 
-            await _repo.DeleteAsync(0);
+                await _repo.DeleteAsync(id);
         }
     }
 }

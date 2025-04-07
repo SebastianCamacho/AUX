@@ -13,7 +13,7 @@ namespace ENTITY.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string? id_ { get; set; }
-        public string? type_Owner { get; set; } //'Propietario y tenedor' 'propietario' 'tenedor'
+        public string? type_Owner { get; set; }
 
         [Required]
         public string third_Id { get; set; }

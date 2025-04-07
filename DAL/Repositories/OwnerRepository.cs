@@ -35,9 +35,9 @@ namespace DAL.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateAsync(Owner owner)
+        public async Task UpdateAsync(Owner entity)
         {
-            _context.Owners.Update(owner);
+            _context.Owners.Update(entity);
             await _context.SaveChangesAsync();
         }
 
