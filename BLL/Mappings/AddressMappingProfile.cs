@@ -17,7 +17,8 @@ namespace BLL.Mappings
             CreateMap<Address, AddressDTO>();
 
             // Mapeo de AddressCreateDTO → Address
-            CreateMap<AddressCreateDTO, Address>();
+            CreateMap<AddressCreateDTO, Address>()
+                .ForMember(dest => dest.id, opt => opt.Ignore());
         }
     }
 }

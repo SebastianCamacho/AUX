@@ -5,7 +5,8 @@ using DAL;
 using DAL.Interfaces;
 using DAL.Repositories;
 using Microsoft.EntityFrameworkCore;
-using AutoMapper; // Add this using directive
+using AutoMapper;
+using BLL.Mappings; // Add this using directive
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,9 +23,10 @@ builder.Services.AddDbContext<GLOBAL_FUEC_DbContext>(options => options.UseMySql
 builder.Services.AddScoped<IAddressRepository, AddressRepository>();
 builder.Services.AddScoped<IAddressService, AddressService>();
 
+builder.Services.AddScoped<INatural_PersonRepository, Natural_PersonRepository>();
+builder.Services.AddScoped<INatural_PersonService,Natural_PersonService >();
+
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-
-
 
 
 
@@ -47,6 +49,24 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.UseMiddleware<ExceptionHandlingMiddleware>();
+
+
+
+var mapperConfig = new MapperConfiguration(cfg =>
+{
+    cfg.AddMaps(AppDomain.CurrentDomain.GetAssemblies());
+});
+
+try
+{
+    mapperConfig.AssertConfigurationIsValid();
+}
+catch (AutoMapperConfigurationException ex)
+{
+    Console.WriteLine("----------- ERROR DE MAPEADO -----------");
+    Console.WriteLine(ex.ToString());
+}
+
 
 app.MapControllers();
 
