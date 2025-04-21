@@ -64,14 +64,14 @@ namespace DAL.InternalMigratons
 
                     b.HasIndex("third_Id");
 
-                    b.ToTable("Address");
+                    b.ToTable("Address", (string)null);
                 });
 
             modelBuilder.Entity("ENTITY.Contracting_Party", b =>
                 {
-                    b.Property<string>("id_")
+                    b.Property<int?>("id_")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("int");
 
                     b.Property<string>("signature_Image")
                         .HasColumnType("longtext");
@@ -84,14 +84,14 @@ namespace DAL.InternalMigratons
 
                     b.HasIndex("third_Id");
 
-                    b.ToTable("Contracting_Partys");
+                    b.ToTable("Contracting_Partys", (string)null);
                 });
 
             modelBuilder.Entity("ENTITY.Models.Owner", b =>
                 {
-                    b.Property<string>("id_")
+                    b.Property<int?>("id_")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("int");
 
                     b.Property<string>("third_Id")
                         .IsRequired()
@@ -104,7 +104,7 @@ namespace DAL.InternalMigratons
 
                     b.HasIndex("third_Id");
 
-                    b.ToTable("Owners");
+                    b.ToTable("Owners", (string)null);
                 });
 
             modelBuilder.Entity("ENTITY.Third_Party", b =>
@@ -152,7 +152,7 @@ namespace DAL.InternalMigratons
 
                     b.HasKey("thirdParty_Id");
 
-                    b.ToTable("Third_Party");
+                    b.ToTable("Third_Party", (string)null);
 
                     b.HasDiscriminator<string>("type_Third_Party").HasValue("Third_Party");
 
