@@ -1,0 +1,12 @@
+E:\Escritorio\UPC\U2025-1\PRACTICAS\FUEC2.0\ENTITY\bin\Release\net8.0\ENTITY.deps.json
+E:\Escritorio\UPC\U2025-1\PRACTICAS\FUEC2.0\ENTITY\bin\Release\net8.0\ENTITY.dll
+E:\Escritorio\UPC\U2025-1\PRACTICAS\FUEC2.0\ENTITY\bin\Release\net8.0\ENTITY.pdb
+E:\Escritorio\UPC\U2025-1\PRACTICAS\FUEC2.0\ENTITY\obj\Release\net8.0\ENTITY.GeneratedMSBuildEditorConfig.editorconfig
+E:\Escritorio\UPC\U2025-1\PRACTICAS\FUEC2.0\ENTITY\obj\Release\net8.0\ENTITY.AssemblyInfoInputs.cache
+E:\Escritorio\UPC\U2025-1\PRACTICAS\FUEC2.0\ENTITY\obj\Release\net8.0\ENTITY.AssemblyInfo.cs
+E:\Escritorio\UPC\U2025-1\PRACTICAS\FUEC2.0\ENTITY\obj\Release\net8.0\ENTITY.csproj.CoreCompileInputs.cache
+E:\Escritorio\UPC\U2025-1\PRACTICAS\FUEC2.0\ENTITY\obj\Release\net8.0\ENTITY.sourcelink.json
+E:\Escritorio\UPC\U2025-1\PRACTICAS\FUEC2.0\ENTITY\obj\Release\net8.0\ENTITY.dll
+E:\Escritorio\UPC\U2025-1\PRACTICAS\FUEC2.0\ENTITY\obj\Release\net8.0\refint\ENTITY.dll
+E:\Escritorio\UPC\U2025-1\PRACTICAS\FUEC2.0\ENTITY\obj\Release\net8.0\ENTITY.pdb
+E:\Escritorio\UPC\U2025-1\PRACTICAS\FUEC2.0\ENTITY\obj\Release\net8.0\ref\ENTITY.dll

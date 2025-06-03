@@ -3,6 +3,7 @@ using System;
 using DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.InternalMigratons
 {
     [DbContext(typeof(FUEC_DbContext))]
-    partial class FUEC_DbContextModelSnapshot : ModelSnapshot
+    [Migration("20250602034047_ConsolidateDriverInfoIntoInternal")]
+    partial class ConsolidateDriverInfoIntoInternal
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -64,47 +67,156 @@ namespace DAL.InternalMigratons
 
                     b.HasIndex("third_Id");
 
-                    b.ToTable("Address", (string)null);
+                    b.ToTable("Address");
                 });
 
             modelBuilder.Entity("ENTITY.Contracting_Party", b =>
                 {
-                    b.Property<int?>("id_")
+                    b.Property<int>("id_")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("INT");
 
                     b.Property<string>("signature_Image")
-                        .HasColumnType("longtext");
+                        .HasColumnType("LONGTEXT");
 
                     b.Property<string>("third_Id")
                         .IsRequired()
+                        .HasMaxLength(20)
                         .HasColumnType("VARCHAR(20)");
 
                     b.HasKey("id_");
 
-                    b.HasIndex("third_Id");
+                    b.HasIndex("third_Id")
+                        .IsUnique();
 
-                    b.ToTable("Contracting_Partys", (string)null);
+                    b.ToTable("Contracting_Partys");
+                });
+
+            modelBuilder.Entity("ENTITY.Models.Document_Driver", b =>
+                {
+                    b.Property<string>("id_Document")
+                        .HasMaxLength(100)
+                        .HasColumnType("VARCHAR(100)");
+
+                    b.Property<string>("driver_Id")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("VARCHAR(20)");
+
+                    b.Property<DateTime?>("end_validity")
+                        .HasColumnType("DATETIME");
+
+                    b.Property<string>("image_Soport")
+                        .HasColumnType("LONGTEXT");
+
+                    b.Property<bool>("is_Expirable")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<DateTime>("start_validity")
+                        .HasColumnType("DATETIME");
+
+                    b.Property<string>("type_Document")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("VARCHAR(100)");
+
+                    b.HasKey("id_Document");
+
+                    b.HasIndex("driver_Id");
+
+                    b.ToTable("Document_Drivers");
+                });
+
+            modelBuilder.Entity("ENTITY.Models.Driver", b =>
+                {
+                    b.Property<string>("driver_Id")
+                        .HasMaxLength(20)
+                        .HasColumnType("VARCHAR(20)");
+
+                    b.Property<DateTime>("create_At")
+                        .HasColumnType("DATETIME");
+
+                    b.Property<string>("create_By")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("VARCHAR(100)");
+
+                    b.Property<string>("email")
+                        .HasMaxLength(100)
+                        .HasColumnType("VARCHAR(100)");
+
+                    b.Property<string>("first_Last_Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("VARCHAR(100)");
+
+                    b.Property<string>("first_Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("VARCHAR(100)");
+
+                    b.Property<string>("image")
+                        .HasColumnType("LONGTEXT");
+
+                    b.Property<string>("phone")
+                        .HasMaxLength(20)
+                        .HasColumnType("VARCHAR(20)");
+
+                    b.Property<string>("second_Last_Name")
+                        .HasMaxLength(100)
+                        .HasColumnType("VARCHAR(100)");
+
+                    b.Property<string>("second_Name")
+                        .HasMaxLength(100)
+                        .HasColumnType("VARCHAR(100)");
+
+                    b.Property<bool>("state")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("type_Id")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("VARCHAR(30)");
+
+                    b.Property<DateTime>("update_At")
+                        .HasColumnType("DATETIME");
+
+                    b.Property<string>("update_By")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("VARCHAR(100)");
+
+                    b.Property<string>("web_Site")
+                        .HasMaxLength(200)
+                        .HasColumnType("VARCHAR(200)");
+
+                    b.HasKey("driver_Id");
+
+                    b.ToTable("Drivers");
                 });
 
             modelBuilder.Entity("ENTITY.Models.Owner", b =>
                 {
-                    b.Property<int?>("id_")
+                    b.Property<int>("id_")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("INT");
 
                     b.Property<string>("third_Id")
                         .IsRequired()
+                        .HasMaxLength(20)
                         .HasColumnType("VARCHAR(20)");
 
                     b.Property<string>("type_Owner")
-                        .HasColumnType("longtext");
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("VARCHAR(40)");
 
                     b.HasKey("id_");
 
-                    b.HasIndex("third_Id");
+                    b.HasIndex("third_Id")
+                        .IsUnique();
 
-                    b.ToTable("Owners", (string)null);
+                    b.ToTable("Owners");
                 });
 
             modelBuilder.Entity("ENTITY.Third_Party", b =>
@@ -121,11 +233,11 @@ namespace DAL.InternalMigratons
                         .HasColumnType("VARCHAR(50)");
 
                     b.Property<string>("email")
-                        .HasMaxLength(50)
-                        .HasColumnType("VARCHAR(50)");
+                        .HasMaxLength(100)
+                        .HasColumnType("VARCHAR(100)");
 
                     b.Property<string>("image")
-                        .HasColumnType("longtext");
+                        .HasColumnType("LONGTEXT");
 
                     b.Property<string>("phone")
                         .HasMaxLength(20)
@@ -152,7 +264,7 @@ namespace DAL.InternalMigratons
 
                     b.HasKey("thirdParty_Id");
 
-                    b.ToTable("Third_Party", (string)null);
+                    b.ToTable("Third_Party");
 
                     b.HasDiscriminator<string>("type_Third_Party").HasValue("Third_Party");
 
@@ -164,17 +276,19 @@ namespace DAL.InternalMigratons
                     b.HasBaseType("ENTITY.Third_Party");
 
                     b.Property<int?>("check_Digit")
-                        .HasColumnType("int");
+                        .HasColumnType("INT");
 
                     b.Property<string>("legal_Representative")
                         .HasMaxLength(200)
                         .HasColumnType("VARCHAR(200)");
 
                     b.Property<string>("name_Company")
-                        .HasColumnType("longtext");
+                        .HasMaxLength(200)
+                        .HasColumnType("VARCHAR(200)");
 
                     b.Property<string>("web_Site")
-                        .HasColumnType("longtext");
+                        .HasMaxLength(200)
+                        .HasColumnType("VARCHAR(200)");
 
                     b.HasDiscriminator().HasValue("Persona Juridica");
                 });
@@ -184,20 +298,20 @@ namespace DAL.InternalMigratons
                     b.HasBaseType("ENTITY.Third_Party");
 
                     b.Property<string>("first_Last_Name")
-                        .HasMaxLength(30)
-                        .HasColumnType("VARCHAR(30)");
+                        .HasMaxLength(100)
+                        .HasColumnType("VARCHAR(100)");
 
                     b.Property<string>("first_Name")
-                        .HasMaxLength(30)
-                        .HasColumnType("VARCHAR(30)");
+                        .HasMaxLength(100)
+                        .HasColumnType("VARCHAR(100)");
 
                     b.Property<string>("second_Last_Name")
-                        .HasMaxLength(30)
-                        .HasColumnType("VARCHAR(30)");
+                        .HasMaxLength(100)
+                        .HasColumnType("VARCHAR(100)");
 
                     b.Property<string>("second_Name")
-                        .HasMaxLength(30)
-                        .HasColumnType("VARCHAR(30)");
+                        .HasMaxLength(100)
+                        .HasColumnType("VARCHAR(100)");
 
                     b.HasDiscriminator().HasValue("Persona Natural");
                 });
@@ -216,23 +330,39 @@ namespace DAL.InternalMigratons
             modelBuilder.Entity("ENTITY.Contracting_Party", b =>
                 {
                     b.HasOne("ENTITY.Third_Party", "Third_Party")
-                        .WithMany()
-                        .HasForeignKey("third_Id")
+                        .WithOne()
+                        .HasForeignKey("ENTITY.Contracting_Party", "third_Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Third_Party");
                 });
 
+            modelBuilder.Entity("ENTITY.Models.Document_Driver", b =>
+                {
+                    b.HasOne("ENTITY.Models.Driver", "Driver")
+                        .WithMany("Document_Drivers")
+                        .HasForeignKey("driver_Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Driver");
+                });
+
             modelBuilder.Entity("ENTITY.Models.Owner", b =>
                 {
                     b.HasOne("ENTITY.Third_Party", "Third_Party")
-                        .WithMany()
-                        .HasForeignKey("third_Id")
+                        .WithOne()
+                        .HasForeignKey("ENTITY.Models.Owner", "third_Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Third_Party");
+                });
+
+            modelBuilder.Entity("ENTITY.Models.Driver", b =>
+                {
+                    b.Navigation("Document_Drivers");
                 });
 
             modelBuilder.Entity("ENTITY.Third_Party", b =>
